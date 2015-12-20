@@ -93,6 +93,13 @@ void TimDrawColoredPattern (void *info, CGContextRef ctx)
     CGColorSpaceRelease (patternSpace);
     //生成模式
     CGPatternCallbacks callBacks = {0,TimDrawColoredPattern, NULL};
+    /*
+     三种模式
+     1. 没有失真(no distortion): 以细微调整模式单元格之间的间距为代价，但通常不超过一个设备像素。
+     2. 最小的失真的恒定间距：设定单元格之间的间距，以细微调整单元大小为代价，但通常不超过一个设备像素。
+     3. 恒定间距：设定单元格之间间距，以调整单元格大小为代价，以求尽快的平铺
+     */
+    
     CGPatternRef pattern = CGPatternCreate(NULL, CGRectMake(0, 0, cellWidth, cellHeight), CGAffineTransformIdentity, xStep, yStep, kCGPatternTilingNoDistortion, true, &callBacks);
     //设置透明度
     CGFloat alpha = 1;
